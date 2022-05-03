@@ -16,13 +16,13 @@ const Register = ({ handleRegister}) => {
     }
     const handleSubmit = (e) => {
       e.preventDefault()
-        let {email, password} = state
+        const {email, password} = state
         handleRegister(password, email)
     }
     return (
             <div className="register">
             <div className="auth">
-            <form  onSubmit={handleSubmit} id='registerForm' className="form form_type_register" noValidate>
+            <form  onSubmit={handleSubmit} id='registerForm' className="form form_type_register" >
             <h2 className="form__title form__title_type_register">Регистрация</h2>
                 <fieldset className="form__fieldset form__fieldset_type_register">
                 <div className="form__input-container">

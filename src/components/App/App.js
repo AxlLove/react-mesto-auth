@@ -32,18 +32,17 @@ function App() {
     const history = useHistory()
 
     useEffect(()=>{
-        api.getProfile()
-            .then((res)=> {
-                setCurrentUser(res)
-            }).catch(console.log);
-    },[]);
-
-    useEffect(()=> {
-        api.getInitialCards().then((res)=>{
-            setCards(res);
-        })
-            .catch(console.log);
-    }, []);
+        if (loggedIn) {
+            api.getProfile()
+                .then((res)=> {
+                    setCurrentUser(res)
+                }).catch(console.log);
+            api.getInitialCards().then((res)=>{
+                setCards(res);
+            })
+                .catch(console.log);
+        }
+    },[loggedIn]);
 
     function handleCardLike(card) {
         const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -122,7 +121,7 @@ function App() {
                 if(!data.token){
                 return;
             }
-            localStorage.setItem("jvt", data.token)
+            localStorage.setItem("jwt", data.token)
             setLoggedIn(true)
         })
         .catch(res=>{
@@ -133,9 +132,9 @@ function App() {
     }
 
     const tokenCheck = () =>{
-        if (localStorage.getItem("jvt")){
-            let jvt = localStorage.getItem("jvt")
-            mestoAuth.getContent(jvt)
+        if (localStorage.getItem("jwt")){
+            let jwt = localStorage.getItem("jwt")
+            mestoAuth.getContent(jwt)
                 .then(data=>{
              setUserEmail(data.data.email)
              setLoggedIn(true)
@@ -157,7 +156,7 @@ function App() {
     }, [loggedIn])
 
     const handleSignOut =  ()=> {
-        localStorage.removeItem('jvt')
+        localStorage.removeItem('jwt')
         setLoggedIn(false)
     }
 
@@ -205,7 +204,10 @@ function App() {
                         <Link to='/sign-up' className='header__link'>Регистрация</Link>
                     </Header>
                     <Login  handleLogin={handleLogin}/>
-                    <InfoTooltip onClose={closeAllPopups} isOpen={isInfoToolTipOpen} successfully={successfully}/>
+                    <InfoTooltip onClose={closeAllPopups} isOpen={isInfoToolTipOpen} successfully={successfully}
+                                 successMassage = 'Вы успешно зарегистрировались'
+                    failMassage = 'Что-то пошло не так! Попробуйте ещё раз.'/>
+
                 </div>
 
             </Route>
@@ -215,7 +217,9 @@ function App() {
                         <Link to='/sign-in' className='header__link'>Войти</Link>
                     </Header>
                     <Register handleRegister = {handleRegister}/>
-                    <InfoTooltip onClose={closeAllPopups} isOpen={isInfoToolTipOpen} successfully={successfully}/>
+                    <InfoTooltip onClose={closeAllPopups} isOpen={isInfoToolTipOpen} successfully={successfully}
+                                 successMassage = 'Вы успешно зарегистрировались'
+                                 failMassage = 'Что-то пошло не так! Попробуйте ещё раз.'/>
                 </div>
 
 </Route>

@@ -20,7 +20,7 @@ function Card ({onCardClick, onCardLike,onCardDelete , card}) {
     return (
     <li className="places__item">
         <button onClick={handleDeleteClick} type="button" className={cardDeleteButtonClassName}/>
-        <img onClick={handleClick} src = {card.link} alt="Изображение" className="places__image"/>
+        <img onClick={handleClick} src = {card.link} alt={card.name} className="places__image"/>
             <div className="places__text">
                 <h2 className="places__name">{card.name}</h2>
                 <div className="places__like-container">

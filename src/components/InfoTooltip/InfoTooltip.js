@@ -1,7 +1,7 @@
-import succesImage from '../../images/succes.svg'
+import successImage from '../../images/succes.svg'
 import failImage from  '../../images/fail.svg'
 import {useHistory} from "react-router-dom";
-function InfoTooltip  ({isOpen, onClose, successfully}) {
+function InfoTooltip  ({isOpen, onClose, successfully, successMassage, failMassage}) {
     const history = useHistory();
      const registerRedirect = () => {
          if (successfully) {
@@ -14,13 +14,13 @@ function InfoTooltip  ({isOpen, onClose, successfully}) {
             <button onClick={registerRedirect} type="button" className="pop-up__close-button"/>
             {successfully?
                 <>
-                    <img className='pop-up__info-tool-image' src={succesImage} alt='Вы успешно зарегистрировались!'/>
-                    <p className="pop-up__info-tool-massage">Вы успешно зарегистрировались!</p>
+                    <img className='pop-up__info-tool-image' src={successImage} alt={successMassage}/>
+                    <p className="pop-up__info-tool-massage">{successMassage}</p>
                 </>
                 :
                 <>
-                    <img className='pop-up__info-tool-image' src={failImage} alt='что то не так!'/>
-                    <p className="pop-up__info-tool-massage">Что-то пошло не так! Попробуйте ещё раз.</p>
+                    <img className='pop-up__info-tool-image' src={failImage} alt={failMassage}/>
+                    <p className="pop-up__info-tool-massage">{failMassage}</p>
                 </>}
         </div>
     </section>
